@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pruebas de codigos</title>
+</head>
+<body>
+    <div id="clock"></div>
+    <form name="calc">
+        <input type="button" name="op" value="Presioname a la hora: 21:09" onclick="calcula(this)">
+    </form>
+
+    <script>
+        var clockDisplay = document.getElementById('clock');
+        var horaActual = null;
+        var h2 = "21:09";
+
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            horaActual = `${hours}:${minutes}`;
+        }
+
+        function calcula(boton) {
+            if (horaActual) {
+                if (horaActual === h2) {
+                    alert("Presionaste el boton a tiempo");
+                } else {
+                    alert("Intentalo a esta hora: " + h2);
+                }
+            } else {
+                alert("Espera unos segundos y vuelve a intentar :v");
+            }
+        }
+
+        document.querySelector('input[value="Presioname a la hora: 21:09"]').addEventListener('click', function () {
+            updateClock();
+        });
+
+    </script>
+</body>
+</html>
