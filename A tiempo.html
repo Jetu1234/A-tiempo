@@ -1,42 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <title>A tiempo</title>
+    <style>
+        :root {
+            --color-boton: #af4c4c;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000000;
+        }
+        .mi-boton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: var(--color-boton);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div id="clock"></div>
     <form name="calc">
-        <input type="button" name="op" value="Presioname a la hora: 21:09" onclick="calcula(this)">
+        <input type="button" class="mi-boton" name="op" value="Presioname a la hora: 6:22 PM" onclick="calcula()">
     </form>
-
     <script>
         var clockDisplay = document.getElementById('clock');
         var horaActual = null;
-        var h2 = "21:09";
-
+        var h2 = "6:22 PM";
         function updateClock() {
             const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
+            const hours = now.getHours() > 12 ? now.getHours() - 12 : now.getHours();
+            const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
             const minutes = now.getMinutes().toString().padStart(2, '0');
-            horaActual = `${hours}:${minutes}`;
+            horaActual = `${hours}:${minutes} ${ampm}`;
         }
-
-        function calcula(boton) {
-            if (horaActual) {
-                if (horaActual === h2) {
-                    alert("Presionaste el boton a tiempo");
-                } else {
-                    alert("Intentalo a esta hora: " + h2);
-                }
-            } else {
-                alert("Espera unos segundos y vuelve a intentar :v");
-            }
-        }
-
-        document.querySelector('input[value="Presioname a la hora: 21:09"]').addEventListener('click', function () {
+        function calcula() {
             updateClock();
-        });
-
+            var boton = document.querySelector('.mi-boton');
+                if (horaActual === h2) {
+                    boton.style.backgroundColor = '#54af4c';
+                    alert("Presionaste el botón a tiempo");
+                    boton.value = "Me haz presionado a tiempo :D";         
+                } else {
+                    alert("Inténtalo a esta hora: " + h2);
+                    boton.style.backgroundColor = '#af4c4c';
+                    boton.value = "Presioname a la hora: " + h2;
+                }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
     </script>
 </body>
 </html>
